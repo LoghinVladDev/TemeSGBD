@@ -63,14 +63,22 @@ public class CatalogueWindow extends JFrame {
         boolean clearRest = false;
 
         for(int k = 0; k < 50; k++){
-            if(data[k][0] == null || data[k+1][0] == null)
+            if(k < 48 && data[k][0] == null || data[k+1][0] == null)
                 clearRest = true;
-            else if(!clearRest && k < 49 && (int)data[k][0] > (int)data[k+1][0])
+            else if(!clearRest && k < 48 && (int)data[k][0] > (int)data[k+1][0])
                  clearRest = true;
+            else
             if(clearRest)
                 for(int j = 0; j < columnNames.length; j++)
                     data[k][j] = null;
         }
+
+//        System.out.println(pageNumber);
+
+        if(pageNumber == 20)
+            for(int j = 0; j < columnNames.length; j++)
+                data[49][j] = null;
+
 
         this.model.setDataVector(this.data, this.columnNames);
 
