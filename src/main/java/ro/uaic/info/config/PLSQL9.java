@@ -78,11 +78,11 @@ public class PLSQL9 {
             System.out.println(exception.toString());
         }
 
-        System.out.println(catalogue.toString());
+//        System.out.println(catalogue.toString());
 
         CatalogueWindow window = new CatalogueWindow(catalogue);
 
-        courseTableNames.forEach(e->System.out.print("\"" + e.replaceAll("_", " ") + "\", "));
+//        courseTableNames.forEach(e->System.out.print("\"" + e.replaceAll("_", " ") + "\", "));
 
         window.init();
 
