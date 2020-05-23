@@ -2,6 +2,7 @@ package ro.uaic.info.config;
 
 import ro.uaic.info.catalogue.Catalogue;
 import ro.uaic.info.catalogue.CatalogueRow;
+import ro.uaic.info.catalogue.LoaderThread;
 import ro.uaic.info.sql.DatabaseHandler;
 import ro.uaic.info.window.CatalogueWindow;
 
@@ -13,6 +14,8 @@ import java.util.List;
 public class PLSQL9 {
     private static List<String> courseTableNames = new ArrayList<>();
     private static Catalogue catalogue = new Catalogue();
+
+    private static boolean loading = false;
 
     public static void main(String[] args) {
         Connection connection = DatabaseHandler
@@ -78,9 +81,12 @@ public class PLSQL9 {
             System.out.println(exception.toString());
         }
 
+        LoaderThread loaderThread = new LoaderThread(catalogue, courseTableNames, 15);
+        loaderThread.start();
+
 //        System.out.println(catalogue.toString());
 
-        CatalogueWindow window = new CatalogueWindow(catalogue);
+        CatalogueWindow window = new CatalogueWindow(catalogue, loaderThread);
 
 //        courseTableNames.forEach(e->System.out.print("\"" + e.replaceAll("_", " ") + "\", "));
 

@@ -1,6 +1,7 @@
 package ro.uaic.info.window;
 
 import ro.uaic.info.catalogue.Catalogue;
+import ro.uaic.info.catalogue.LoaderThread;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,8 @@ public class CatalogueWindow extends JFrame {
     private JTable table;
     private DefaultTableModel model;
 
+    private LoaderThread loader;
+
     private int pageNo = 0;
 
     private final Object[] columnNames = {"ID", "NR_MATRICOL", "NUME", "PRENUME", "LOGICA", "MATEMATICA", "INTRODUCERE IN PROGRAMARE",
@@ -26,7 +29,7 @@ public class CatalogueWindow extends JFrame {
 
     private Object[][] data = null;
 
-    public CatalogueWindow(Catalogue catalogue){
+    public CatalogueWindow(Catalogue catalogue, LoaderThread loader){
         super();
         this.setSize(
                 new Dimension(1600, 900)
@@ -37,11 +40,14 @@ public class CatalogueWindow extends JFrame {
         this.setResizable(false);
 
         this.catalogue = catalogue;
+        this.loader = loader;
 
         this.setVisible(true);
     }
 
     public void loadPage(int pageNumber){
+
+        while(loader.isLoading());
 
         AtomicInteger i = new AtomicInteger(0);
 
